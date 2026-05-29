@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You, My Love 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- Floating petals -->
+<div class="petals-bg" id="petalsBg"></div>
+<div class="noise"></div>
+
+<!-- Splash -->
+<div id="splash">
+  <div class="splash-heart">🌸</div>
+  <div class="splash-title">Hi, Aida Sayang~</div>
+  <div class="splash-sub">this little corner is just for you</div>
+  <button class="enter-btn" onclick="enterSite()">Enter ✦</button>
+</div>
+
+<!-- Main App -->
+<div id="app">
+  <nav>
+    <div class="nav-logo">for you 🌸</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active" onclick="showSection('home',this)">Home</a></li>
+      <!-- <li><a href="#" onclick="showSection('words',this)">Kata-Kata</a></li> -->
+      <li><a href="#" onclick="showSection('letter',this)">Surat</a></li>
+      <li><a href="#" onclick="showSection('wish',this)">Pilih Perasaan</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home" class="active">
+    <div class="home-inner">
+      <div class="home-emoji">✦ 🌷 ✦</div>
+      <div class="home-greeting">Hello, my Kisah</div>
+      <h1 class="home-title">Kamu adalah<br>bagian terindah<br>dari hariku</h1>
+      <p class="home-desc">
+        Setiap hari bersamamu terasa seperti halaman favorit dari buku yang tidak ingin aku selesaikan.
+        Aku membuatkan tempat kecil ini, hanya untukmu.
+      </p>
+      <div class="home-cta">
+        <!-- <button class="btn-primary" onclick="showSection('words', document.querySelector('.nav-links a:nth-child(2)'))">Baca Kata-Kata 💌</button> -->
+        <button class="btn-ghost" onclick="showSection('wish', document.querySelector('.nav-links li:last-child a'))">Pilih Perasaanmu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORDS -->
+  <section id="words">
+    <div class="words-inner">
+      <div class="section-label">untuk kamu</div>
+      <h2 class="section-title">Kata-Kata dari Hatiku</h2>
+      <div class="quote-card" id="quoteCard">
+        <div class="quote-text" id="quoteText">Loading...</div>
+        <div class="quote-author" id="quoteAuthor">— untukmu</div>
+      </div>
+      <div class="quote-nav" id="quoteDots"></div>
+      <div style="margin-top:2rem; display:flex; gap:1rem; justify-content:center;">
+        <button class="btn-ghost" onclick="prevQuote()">← Sebelumnya</button>
+        <button class="btn-primary" onclick="nextQuote()">Selanjutnya →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section id="letter">
+    <div class="letter-inner">
+      <div class="letter-date">🌸 Untuk kamu, hari ini dan seterusnya</div>
+      <div class="letter-body">
+        <p>Aida,</p>
+        <!-- <p>
+          Ada banyak hal yang ingin aku katakan, tapi kata-kata selalu terasa terlalu kecil untuk menampung semua yang aku rasakan.
+        </p>
+        <p>
+          Kamu bukan hanya seseorang yang hadir di hariku — kamu adalah alasan aku tersenyum sebelum tidur, dan pikiran pertama yang muncul saat aku membuka mata.
+        </p>
+        <p>
+          Aku bersyukur untuk setiap momen bersamamu. Untuk tawa kita, untuk diam-diam yang nyaman, untuk semua hal kecil yang hanya kita yang tahu.
+        </p>
+        <p>
+          Tetaplah menjadi dirimu yang apa adanya. Karena versi itulah yang paling aku cintai.
+        </p> -->
+      </div>
+      <!-- <div class="letter-sign">dengan cinta, selalu 🌷</div> -->
+    </div>
+  </section>
+
+  <!-- WISH -->
+  <section id="wish">
+    <div class="wish-inner">
+      <div class="section-label">interaktif</div>
+      <h2 class="section-title">Hari ini kamu merasa...</h2>
+      <div class="wish-cards" id="wishCards">
+        <div class="wish-card" onclick="pickWish(this, 0)">
+          <span class="wish-emoji">🥰</span>
+          <span class="wish-label">Bahagia</span>
+        </div>
+        <div class="wish-card" onclick="pickWish(this, 1)">
+          <span class="wish-emoji">🫠</span>
+          <span class="wish-label">Lelah</span>
+        </div>
+        <div class="wish-card" onclick="pickWish(this, 2)">
+          <span class="wish-emoji">😔</span>
+          <span class="wish-label">Sedih</span>
+        </div>
+        <div class="wish-card" onclick="pickWish(this, 3)">
+          <span class="wish-emoji">🤩</span>
+          <span class="wish-label">Semangat</span>
+        </div>
+        <div class="wish-card" onclick="pickWish(this, 4)">
+          <span class="wish-emoji">🥺</span>
+          <span class="wish-label">Kangen</span>
+        </div>
+        <div class="wish-card" onclick="pickWish(this, 5)">
+          <span class="wish-emoji">😌</span>
+          <span class="wish-label">Tenang</span>
+        </div>
+      </div>
+      <div class="wish-response" id="wishResponse"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // ── Cursor ──
+  const cursor = document.getElementById('cursor');
+  const trail  = document.getElementById('cursorTrail');
+  let mx = 0, my = 0, tx = 0, ty = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  setInterval(() => {
+    tx += (mx - tx) * 0.18; ty += (my - ty) * 0.18;
+    trail.style.left = tx + 'px'; trail.style.top = ty + 'px';
+  }, 16);
+
+  // ── Petals ──
+  const bg = document.getElementById('petalsBg');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 6 + Math.random() * 12;
+    p.style.cssText = `
+      left:${Math.random()*100}vw;
+      width:${size}px; height:${size}px;
+      animation-duration:${8+Math.random()*12}s;
+      animation-delay:${Math.random()*10}s;
+      opacity:0;
+    `;
+    bg.appendChild(p);
+  }
+
+  // ── Splash ──
+  function enterSite() {
+    document.getElementById('splash').classList.add('hide');
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('app').classList.add('visible');
+    }, 850);
+  }
+
+  // ── Navigation ──
+  function showSection(id, el) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  // ── Quotes ──
+  const quotes = [
+    { text: "Kamu adalah rumah yang aku temukan tanpa sengaja, dan sekarang aku tidak mau pergi ke mana-mana.", author: "— untukmu" },
+    { text: "Setiap saat bersamamu terasa seperti playlist favorit yang selalu ingin diputar ulang.", author: "— dari hatiku" },
+    { text: "Bukan karena kamu sempurna, tapi karena bersama kamu aku merasa cukup dan lengkap.", author: "— selalu" },
+    { text: "Jika ada satu hal yang pasti di dunia ini, itu adalah betapa berartinya kamu bagiku.", author: "— untukmu saja" },
+    { text: "Caramu tertawa adalah cara terfavoritku melihat dunia menjadi lebih indah.", author: "— dengan cinta" },
+    { text: "Aku tidak butuh seribu kata untuk bilang aku sayang kamu. Tapi aku bisa mengatakannya seribu kali jika kamu mau.", author: "— selamanya" },
+  ];
+  let qi = 0;
+  function renderQuote() {
+    const card = document.getElementById('quoteCard');
+    card.style.opacity = 0; card.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      document.getElementById('quoteText').textContent = quotes[qi].text;
+      document.getElementById('quoteAuthor').textContent = quotes[qi].author;
+      document.querySelectorAll('.quote-dot').forEach((d,i) => d.classList.toggle('active', i===qi));
+      card.style.transition = 'opacity 0.4s, transform 0.4s';
+      card.style.opacity = 1; card.style.transform = 'translateY(0)';
+    }, 200);
+  }
+  function nextQuote() { qi = (qi+1)%quotes.length; renderQuote(); }
+  function prevQuote() { qi = (qi-1+quotes.length)%quotes.length; renderQuote(); }
+
+  // Build dots
+  const dotsEl = document.getElementById('quoteDots');
+  quotes.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'quote-dot' + (i===0?' active':'');
+    d.onclick = () => { qi=i; renderQuote(); };
+    dotsEl.appendChild(d);
+  });
+  renderQuote();
+
+  // ── Wish responses ──
+  const wishResp = [
+    "Syukurlah! Kebahagiaanmu adalah kebahagiaanku juga. Semoga hari ini terus menyenangkan untukmu, sayang 🌸",
+    "Istirahat ya, kamu sudah bekerja keras. Aku di sini kalau kamu butuh seseorang untuk bersandar. Peluk hangat darimu 🤗",
+    "Aku di sini, ya. Cerita apa saja, aku mau mendengarkan. Kamu tidak pernah sendirian selama aku ada 💕",
+    "Semangatmu menularkan hal positif ke sekitarmu. Kamu memang luar biasa, jangan berhenti bersinar! ✨",
+    "Aku kangen kamu juga, lebih dari yang bisa aku ungkapkan. Sebentar lagi kita ketemu ya, sayang 🥺💌",
+    "Ketenangan adalah tanda bahwa kamu sudah berada di tempat yang tepat. Nikmati momenmu 🌙",
+  ];
+  function pickWish(el, idx) {
+    document.querySelectorAll('.wish-card').forEach(c => c.classList.remove('picked'));
+    el.classList.add('picked');
+    const resp = document.getElementById('wishResponse');
+    resp.textContent = wishResp[idx];
+    resp.classList.add('show');
+  }
+</script>
+</body>
+</html>
