@@ -103,15 +103,12 @@
           <div id="lockScreen" class="lock-screen">
             <span class="lock-icon">🔐</span>
             <div class="lock-title">Khusus untukmu</div>
-            <div class="lock-sub">Masukkan kata sandi untuk membaca pesan</div>
             <div class="pass-row">
               <input id="passInput" class="pass-input" type="password" placeholder="kata sandi..."
                 onkeydown="if(event.key==='Enter')checkPass()">
               <button class="btn-primary" onclick="checkPass()">Buka 🔓</button>
             </div>
             <div class="pass-err" id="passErr">❌ Kata sandi salah, sayang~</div>
-            <div style="margin-top:1rem;font-size:.82rem;color:var(--soft-pink);font-style:italic;">Hint: kata sayang +
-              ku</div>
           </div>
           <div id="msgBox" style="display:none">
             <div class="msg-box-header">
